@@ -1,426 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roshan Dura - Web & App Developer</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roshan Dura | Flutter Developer</title>
+  <meta name="description" content="Portfolio of Roshan Dura, a Flutter developer with three apps published on the Play Store.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #ffffff;
-            color: #333;
-            line-height: 1.7;
-        }
+  <style>
+    /* ============ 1. COLORS & SIZES (change the look here) ============ */
+    :root {
+      --white: #ffffff;       /* main background */
+      --soft: #f6f7f9;        /* light grey for alternate sections */
+      --ink: #1b1f27;         /* main text */
+      --muted: #5b6472;       /* secondary text */
+      --line: #e6e8ec;        /* thin borders */
+      --accent: #1f5fbf;      /* the one colour: buttons and links */
+      --accent-dark: #174a96; /* accent when hovered */
+      --font: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --radius: 10px;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    /* ============ 2. BASE ============ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    body { font-family: var(--font); color: var(--ink); background: var(--white); line-height: 1.7; font-size: 17px; }
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .container { width: min(1040px, 100% - 48px); margin-inline: auto; }
+    .narrow { max-width: 680px; }
 
-        /* Hero Section (Header with Image) */
-        .hero {
-            padding: 60px 0;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #eee;
-        }
+    /* ============ 3. HEADER ============ */
+    .site-header { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-weight: 800; font-size: 1.2rem; text-decoration: none; }
+    .nav { display: flex; gap: 28px; }
+    .nav a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.95rem; }
+    .nav a:hover, .nav a.active { color: var(--accent); }
+    .menu-btn { display: none; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 14px; font: inherit; font-weight: 600; color: var(--ink); cursor: pointer; }
 
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-        }
+    /* ============ 4. HERO ============ */
+    .hero { padding: 88px 0 72px; }
+    .hero-inner { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: center; }
+    h1 { font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: 1.15; font-weight: 800; letter-spacing: -0.02em; }
+    .lead { margin-top: 20px; font-size: 1.15rem; color: var(--muted); max-width: 520px; }
+    .actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 12px 22px; border-radius: var(--radius); font-weight: 600; text-decoration: none; border: 1px solid transparent; transition: background 0.2s, color 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-ghost { border-color: var(--line); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-        .hero-text {
-            flex: 1;
-            max-width: 600px;
-        }
+    /* Profile picture box: empty = soft dashed circle */
+    .photo { width: 100%; max-width: 320px; aspect-ratio: 1/1; justify-self: center; border-radius: 50%; overflow: hidden; background: var(--soft); border: 2px dashed var(--line); }
+    .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo:has(img) { border: none; }
 
-        .hero-text h1 {
-            font-size: 2.5rem;
-            color: #222;
-            margin-bottom: 10px;
-        }
+    /* ============ 5. SECTIONS ============ */
+    .section { padding: 80px 0; }
+    .section.alt { background: var(--soft); }
+    h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 24px; }
+    .section p { color: var(--muted); }
+    .section p + p { margin-top: 16px; }
+    .group-title { font-size: 1rem; font-weight: 600; margin: 8px 0 4px; }
+    .group-title:not(:first-of-type) { margin-top: 40px; }
 
-        .hero-text .subtitle {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 15px;
-            font-weight: 400;
-        }
+    /* ============ 6. APP LIST ============ */
+    .project-list { list-style: none; }
+    .project { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .project h4 { font-size: 1.1rem; font-weight: 600; }
+    .project p { margin-top: 4px; max-width: 560px; }
+    .project .tags { font-size: 0.88rem; color: var(--accent); font-weight: 500; }
+    .link { white-space: nowrap; font-weight: 600; font-size: 0.95rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+    .link:hover { border-bottom-color: var(--accent); }
 
-        .hero-text .about-short {
-            color: #444;
-            font-size: 1.05rem;
-            line-height: 1.6;
-        }
+    /* ============ 7. EXPERIENCE ============ */
+    .job + .job { margin-top: 32px; }
+    .job h4 { font-size: 1.1rem; font-weight: 600; }
+    .section .meta { font-size: 0.92rem; color: var(--accent); font-weight: 500; }
 
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
+    /* ============ 8. SKILLS ============ */
+    .skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 56px; }
+    .skills > div { padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .skills dt { font-weight: 600; }
+    .skills dd { color: var(--muted); }
 
-        .hero-image img {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #007BFF;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
+    /* ============ 9. CONTACT & FOOTER ============ */
+    .contact-list { list-style: none; margin-top: 24px; }
+    .contact-list li + li { margin-top: 8px; }
+    .contact-list a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .contact-list a:hover { text-decoration: underline; }
+    .contact-list span { color: var(--muted); }
+    .site-footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 0.9rem; }
 
-        /* General Section */
-        .section {
-            padding: 60px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #222;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 50px;
-            height: 3px;
-            background: #007BFF;
-        }
-
-        /* About */
-        .about p {
-            font-size: 1.05rem;
-            color: #444;
-            max-width: 800px;
-        }
-
-        /* Skills */
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .skills-grid span {
-            background-color: #f0f4f8;
-            color: #333;
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Projects */
-        .projects .project-card {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-            border-left: 4px solid #007BFF;
-        }
-
-        .projects h3 {
-            color: #1a1a1a;
-            margin-bottom: 10px;
-        }
-
-        .projects ul {
-            margin: 10px 0 10px 20px;
-        }
-
-        .projects li {
-            margin-bottom: 5px;
-        }
-
-        /* Education */
-        .education p {
-            font-size: 1.05rem;
-            color: #444;
-        }
-
-        /* Contact */
-        .contact p {
-            font-size: 1.05rem;
-            margin-bottom: 10px;
-        }
-
-        .contact a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        .contact a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 30px;
-            color: #777;
-            font-size: 0.9rem;
-            background-color: #f8f9fa;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .hero-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-text {
-                margin-bottom: 30px;
-            }
-
-            .hero-image {
-                order: -1;
-                /* Image on top on mobile */
-            }
-
-            .hero-text .subtitle,
-            .hero-text .about-short {
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-text h1 {
-                font-size: 2.2rem;
-            }
-
-            .section {
-                padding: 50px 0;
-            }
-
-            .skills-grid span {
-                font-size: 0.9rem;
-                padding: 8px 14px;
-            }
-        }
-    </style>
+    /* ============ 10. PHONE LAYOUT ============ */
+    @media (max-width: 760px) {
+      .menu-btn { display: block; }
+      .nav { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--white); border-bottom: 1px solid var(--line); }
+      .nav.open { display: flex; }
+      .nav a { padding: 14px 24px; }
+      .hero { padding: 48px 0; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .photo { order: -1; max-width: 200px; justify-self: start; }
+      .section { padding: 56px 0; }
+      .project { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .skills { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- Header / Hero Section -->
-    <header class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <!-- Text Section -->
-                <div class="hero-text">
-                    <h1>Roshan Dura</h1>
-                    <p class="subtitle">Flutter Developer | Mobile App & Web Developer</p>
-                    <p class="about-short">
-                        I'm a final-year BICTE student with a growing passion for building intuitive apps and websites.
-                        I believe great technology should be simple, accessible, and enjoyable — and I’m on a journey to
-                        create exactly that.
-                    </p>
-                </div>
+  <!-- ============ HEADER / NAV ============ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="logo">Roshan Dura</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">Menu</button>
+      <nav class="nav" id="nav">
+        <a href="#about">About</a>
+        <a href="#apps">Apps</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-                <!-- Image Section -->
-                <div class="hero-image">
-                    <img src="durainSET.jpg" alt="Roshan Dura">
-                </div>
-            </div>
-        </div>
-    </header>
+  <main id="top">
 
-    <!-- About Me -->
-    <section class="section about">
-        <div class="container">
-            <h2>About Me</h2>
-            <p>
-                I'm currently completing my Bachelor’s in Information Communication and Technology Education, where I’ve
-                developed a strong foundation in both teaching and technical skills. My real passion, however, lies in
-                app and web development — especially designing interfaces that are clean, user-friendly, and purposeful.
-                I enjoy turning ideas into working prototypes, whether it’s a simple to-do app or a full landing page.
-                When I'm not coding, I love watching anime, exploring nature through trekking, playing strategic games
-                like chess, and staying curious about the latest in AI and tech.
-            </p>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>I build Flutter apps that people can actually install.</h1>
+          <p class="lead">
+            I'm a Flutter developer and 2026 IT graduate. Three of my apps are live on
+            the Google Play Store, and I've finished a three-month internship.
+          </p>
+          <div class="actions">
+            <a href="#apps" class="btn btn-primary">See my apps</a>
+            <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          </div>
         </div>
+
+        <!-- PROFILE PICTURE: delete the comment marks around the img line below and fix the file name -->
+        <div class="photo" aria-label="Profile picture placeholder">
+          <!-- <img src="durainSET.jpg" alt="Photo of Roshan Dura"> -->
+        </div>
+      </div>
     </section>
 
-    <!-- Skills -->
-    <section class="section skills">
-        <div class="container">
-            <h2>Skills</h2>
-            <div class="skills-grid">
-
-                <span>HTML, CSS</span>
-                <span>Kotlin</span>
-                <span>Flutter</span>
-                <span>Dart</span>
-                <span>Firebase</span>
-                <span>REST API</span>
-                <span>MySQL</span>
-                <span>Git</span>
-                <span>GitHub</span>
-                <span>Android Studio</span>
-                <span>UI/UX Design</span>
-                <span>App Development</span>
-                <span>Frontend Development</span>
-                <span>Communication</span>
-                <span>Team Work</span>
-                <span>Creative</span>
-            </div>
-        </div>
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="about">
+      <div class="container narrow">
+        <h2>About</h2>
+        <p>
+          I specialise in cross-platform mobile development with Flutter and Dart.
+          I like turning ideas into clean, responsive interfaces, and I use Provider
+          for state management and Firebase for the backend. I've taken apps from
+          idea to Play Store, so I know the whole path, not just the code.
+        </p>
+        <p>
+          Outside of coding, I go hiking, run, play chess and read manga. They keep
+          me patient, disciplined and good at solving problems step by step.
+        </p>
+      </div>
     </section>
 
+    <!-- ============ APPS ============ -->
+    <section class="section alt" id="apps">
+      <div class="container">
+        <h2>Apps</h2>
 
-
-
-    <!-- Projects -->
-    <section class="section projects">
-
-        <div class="container">
-
-            <h2>Projects</h2>
-
-
-            <div class="project-card">
-
-                <h3>Driver & Passenger Connecting App</h3>
-
-                <p>
-                    A Flutter-based application that connects drivers and passengers.
-                    Worked on user interface design, Firebase integration, and backend data handling.
-                </p>
-
-                <p>
-                    <strong>Technology:</strong>
-                    Flutter, Dart, Firebase
-                </p>
-
+        <h3 class="group-title">Published on Google Play</h3>
+        <ul class="project-list">
+          <li class="project">
+            <div>
+              <h4>Track My Money</h4>
+              <p>Expense tracking app. Firebase stores and syncs the data, Provider manages the state.</p>
+              <p class="tags">Flutter, Dart, Firebase, Provider</p>
             </div>
-
-
-
-            <div class="project-card">
-
-                <h3>Weather App</h3>
-
-                <p>
-                    Developed a weather application using API integration to fetch and display
-                    real-time weather information.
-                </p>
-
-                <p>
-                    <strong>Technology:</strong>
-                    Flutter, REST API
-                </p>
-
+            <a class="link" href="#" target="_blank" rel="noopener">View on Play Store</a>
+          </li>
+          <li class="project">
+            <div>
+              <h4>Document Scanner</h4>
+              <p>Scans documents with the camera and saves them, using third-party scanning packages.</p>
+              <p class="tags">Flutter, Dart, Scanner packages</p>
             </div>
-
-
-
-            <div class="project-card">
-
-                <h3>Notes Application</h3>
-
-                <p>
-                    Created a simple notes application with clean UI and data management features.
-                </p>
-
-                <p>
-                    <strong>Technology:</strong>
-                    Flutter, Dart
-                </p>
-
+            <a class="link" href="#" target="_blank" rel="noopener">View on Play Store</a>
+          </li>
+          <li class="project">
+            <div>
+              <h4>Janda Burja</h4>
+              <p>A dice game with 3D rendering and smooth animations.</p>
+              <p class="tags">Flutter, flutter_three, AnimationController</p>
             </div>
+            <a class="link" href="#" target="_blank" rel="noopener">View on Play Store</a>
+          </li>
+        </ul>
 
-
-            <div class="project-card">
-
-                <h3>Web Development Projects</h3>
-
-                <p>
-                    Built responsive websites including landing pages, booking systems,
-                    and practice projects using HTML and CSS.
-                </p>
-
+        <h3 class="group-title">More projects</h3>
+        <ul class="project-list">
+          <li class="project">
+            <div>
+              <h4>Driver and Passenger Connecting App</h4>
+              <p>Connects drivers and passengers. I worked on the interface, Firebase integration and data handling.</p>
+              <p class="tags">Flutter, Dart, Firebase</p>
             </div>
-
-
-        </div>
-
+            <a class="link" href="#" target="_blank" rel="noopener">GitHub</a>
+          </li>
+          <li class="project">
+            <div>
+              <h4>Weather App</h4>
+              <p>Shows live weather data fetched from a REST API.</p>
+              <p class="tags">Flutter, REST API</p>
+            </div>
+            <a class="link" href="#" target="_blank" rel="noopener">GitHub</a>
+          </li>
+          <li class="project">
+            <div>
+              <h4>Notebook, Alarm, Calculator and Story apps</h4>
+              <p>Smaller apps where I practised layouts, local storage, notifications and animation.</p>
+              <p class="tags">Flutter, Dart</p>
+            </div>
+            <a class="link" href="#" target="_blank" rel="noopener">GitHub</a>
+          </li>
+          <li class="project">
+            <div>
+              <h4>Websites</h4>
+              <p>Responsive landing pages and a booking system built with HTML, CSS and JavaScript.</p>
+              <p class="tags">HTML, CSS, JavaScript</p>
+            </div>
+            <a class="link" href="#" target="_blank" rel="noopener">GitHub</a>
+          </li>
+        </ul>
+      </div>
     </section>
 
-
-<!-- ACHIEVEMENT -->
-    <section class="section">
-
-        <div class="container">
-
-            <h2>Achievements</h2>
-
-            <ul>
-
-                <li>Completed Flutter Development Training</li>
-
-                <li>Built multiple Flutter applications</li>
-
-                <li>Integrated Firebase backend in mobile applications</li>
-
-                <li>Worked with APIs and Flutter dependencies</li>
-
-                <li>Experience with MySQL database</li>
-
-                <li>Used GitHub for version control and project management</li>
-
-            </ul>
-
-
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section" id="experience">
+      <div class="container narrow">
+        <h2>Experience</h2>
+        <div class="job">
+          <h4>Flutter Developer Intern</h4>
+          <p class="meta">Company name | 3 months</p>
+          <p>
+            Worked on a real product with a team. Add one or two sentences here about
+            what you built and which tools you used.
+          </p>
         </div>
-
+        <div class="job">
+          <h4>Bachelor of Information Communication and Technology Education (BICTE)</h4>
+          <p class="meta">University name | 2022 to 2026</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Education -->
-    <section class="section education">
-        <div class="container">
-            <h2>Education</h2>
-            <p><strong>Bachelor of Information Communication and Technology Education (BICTE)</strong><br />
-                2022 – Present</p>
-        </div>
+    <!-- ============ SKILLS ============ -->
+    <section class="section alt" id="skills">
+      <div class="container">
+        <h2>Skills</h2>
+        <dl class="skills">
+          <div><dt>Mobile</dt><dd>Flutter, Dart, Provider, Kotlin, Java</dd></div>
+          <div><dt>Web</dt><dd>HTML, CSS, JavaScript</dd></div>
+          <div><dt>Backend and data</dt><dd>Firebase, REST APIs, MySQL, Python</dd></div>
+          <div><dt>Tools</dt><dd>Git, GitHub, Android Studio</dd></div>
+          <div><dt>Design</dt><dd>UI/UX design, basic Blender</dd></div>
+          <div><dt>Soft skills</dt><dd>Communication, teamwork</dd></div>
+          <div><dt>Languages</dt><dd>English, Nepali, Hindi</dd></div>
+        </dl>
+      </div>
     </section>
 
-    <!-- Contact -->
-    <section class="section contact">
-        <div class="container">
-            <h2>Contact</h2>
-            <p><strong>Email:</strong> <a href="mailto:durainbachelor100@gmail.com">durainbachelor100@gmail.com</a></p>
-            <p><strong>Phone:</strong> 9829191036</p>
-            <p><strong>Location:</strong>  Nepal</p>
-        </div>
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="container narrow">
+        <h2>Contact</h2>
+        <p>I'm looking for a Flutter developer role where I can work on real products and keep growing. Send me a message.</p>
+        <ul class="contact-list">
+          <li><a href="mailto:durainbachelor100@gmail.com">durainbachelor100@gmail.com</a></li>
+          <li><span>Phone: 9829191036</span></li>
+          <li><span>Location: Nepal</span></li>
+          <li><a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Roshan Dura. All rights reserved.</p>
-        </div>
-    </footer>
+  </main>
 
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Roshan Dura</p>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Phone menu: the "Menu" button shows or hides the nav links
+    const menuBtn = document.getElementById("menuBtn");
+    const nav = document.getElementById("nav");
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", isOpen);
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    // 2. Highlight the nav link of the section you are reading
+    const sections = document.querySelectorAll("main section[id]");
+    const navLinks = document.querySelectorAll(".nav a");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            navLinks.forEach((link) => {
+              link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id);
+            });
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    sections.forEach((section) => observer.observe(section));
+
+    // 3. Footer year updates itself
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
-
 </html>
